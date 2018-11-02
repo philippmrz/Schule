@@ -6,7 +6,7 @@ class Sort {
   public static void main(String [] args){
     fillArray();
     log(arr);
-    insertionSort();
+    selectionSort();
     log(arr);
   }
 
@@ -63,6 +63,13 @@ class Sort {
   }
 
   static void selectionSort() {
-
+    int smallestNumIndex;
+    for (int index = 0; index < arr.length; index++) {
+      smallestNumIndex = index;
+      for (int smallestCounter = index; smallestCounter < arr.length; smallestCounter++) {
+        if (arr[smallestCounter] < arr[smallestNumIndex]) smallestNumIndex = smallestCounter;
+      }
+      if (arr[smallestNumIndex] != arr[index]) swap(index, smallestNumIndex);
+    }
   }
 }
