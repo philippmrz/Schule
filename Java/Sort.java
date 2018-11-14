@@ -6,7 +6,7 @@ class Sort {
   public static void main(String [] args){
     fillArray();
     log(arr);
-    quickSort();
+    quickSort(0, arr.length - 1);
     log(arr);
   }
 
@@ -74,21 +74,36 @@ class Sort {
   }
 
   static void quickSort(int start, int end) {
+    if (start < end) {
       int pivotIndex = returnSortedPivot(start, end);
 
       quickSort(start, pivotIndex - 1);
       quickSort(pivotIndex + 1, end);
+    }
   }
 
   static int returnSortedPivot(int start, int end) {
-      int pivotIndex;
+    int left = start;
+    int right = end - 1;
 
-      int left = start;
-      int right = end;
+    int pivot = arr[end];
+    System.out.println("Left: " + left + " Right: " + right + " Pivot: " + pivot);
 
-      while (left < right) {
-
+    while (left < right) {
+      // Find first item with item > pivot starting from the left
+      while (arr[left] < pivot && right >= left) {
+        left++;
       }
-      return pivotIndex;
+
+      while (arr[right] > pivot && right >= left) {
+        right--;
+      }
+
+      System.out.println("larger than pivot: " + arr[left]);
+      System.out.println("smaller than pivot: " + arr[right]);
+      if (right < left) swap(left, end);
+      else swap(left, right);
+    }
+    return left;
   }
 }
