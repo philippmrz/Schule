@@ -6,7 +6,7 @@ class Sort {
   public static void main(String [] args){
     fillArray();
     log(arr);
-    selectionSort();
+    quickSort();
     log(arr);
   }
 
@@ -71,5 +71,24 @@ class Sort {
       }
       if (arr[smallestNumIndex] != arr[index]) swap(index, smallestNumIndex);
     }
+  }
+
+  static void quickSort(int start, int end) {
+      int pivotIndex = returnSortedPivot(start, end);
+
+      quickSort(start, pivotIndex - 1);
+      quickSort(pivotIndex + 1, end);
+  }
+
+  static int returnSortedPivot(int start, int end) {
+      int pivotIndex;
+
+      int left = start;
+      int right = end;
+
+      while (left < right) {
+
+      }
+      return pivotIndex;
   }
 }
