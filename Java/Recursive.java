@@ -1,14 +1,14 @@
 class Recursive {
   public static void main(String[] args) {
-    System.out.println(sequence(3));
-    System.out.println(pascalTriangle(1, 2));
+    System.out.println(sequence(3, 2));
+    System.out.println(pascalTriangle(4, 2));
     System.out.println(fibonacci(10));
   }
 
-  static int sequence(int n) {
+  static int sequence(int n, int factor) {
     if (n == 0) return 1;
     else {
-      return 2 * sequence(n - 1);
+      return factor * sequence(n - 1, factor);
     }
   }
 
