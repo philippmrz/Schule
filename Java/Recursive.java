@@ -1,7 +1,8 @@
 class Recursive {
   public static void main(String[] args) {
-    // System.out.println(sequence(3));
+    System.out.println(sequence(3));
     System.out.println(pascalTriangle(1, 2));
+    System.out.println(fibonacci(10));
   }
 
   static int sequence(int n) {
@@ -18,6 +19,12 @@ class Recursive {
       return 0;
     }
     else return pascalTriangle(row - 1, col) + pascalTriangle(row - 1, col - 1);
+  }
+
+  static int fibonacci(int n) {
+    if (n == 0) return 0;
+    else if (n == 1) return 1;
+    else return fibonacci(n - 1) + fibonacci(n - 2);
   }
 
   static void printInvalidInput() {
