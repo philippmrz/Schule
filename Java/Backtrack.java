@@ -6,9 +6,15 @@ public class Backtrack {
   public static void main(String[] args) {
     Backtrack b = new Backtrack();
     b.board = b.initBoard(b.board);
-    int[][] validPosition = b.getValidPos(b.board);
-    for (int i = 0; i <= 1; i++) {
-      System.out.print(validPosition[i][0] + " ");
+    int[] validPosition = new int[2];
+    while (validPosition != null) {
+      validPosition = b.getValidPos(b.board);
+      b.board[validPosition[0]][validPosition[1]] = b.DAME;
+    }
+    for (int row = 0; row < b.board.length; row++) {
+      for (int col = 0; col < b.board.length; col++) {
+        System.out.print(b.board[row][col]);
+      }
     }
   }
   
@@ -42,7 +48,7 @@ public class Backtrack {
   private int[][] getValidPos(int[][] board) {
     for (int row = 0; row < board.length; row++) {
       for (int col = 0; col < board.length; col++) {
-        if (checkValid(board, row, col)) return new int[][]{{row}, {col}};
+        if (checkValid(board, row, col)) return new int[]{row, col};
       }
     }
     return null;
