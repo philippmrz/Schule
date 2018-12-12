@@ -1,15 +1,38 @@
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
+
 public class Kette {
   Knoten kopf = new Knoten(null, null, "Kopf");
   Knoten ende = new Knoten(kopf, null, "Ende");
   public static void main(String[] args) {
-    Kette kette = new Kette();
-    kette.kopf.successor = kette.ende;
-    kette.push("Hello");
-    kette.push("World");
-    kette.print();
-    System.out.print(kette.kopf.successor.successor.data);
+    Kette kette = initialize();
+    BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+    int option = 1;
+    while (true) {
+      printOptions(); 
+      try {
+        option = Integer.parseInt(br.readLine());
+      } catch (IOException e) {
+        System.err.println("Invalid Format!");
+      }
+      switch (option) {
+        case  1: 
+          kette.print();
+          break;
+        case  2: 
+          kette.pop();
+          break;
+        case 3:
+          kette.pushCLI(br, kette);
+          break;
+        default: 
+          System.out.println("Invalid input");
+      }
+    }
+    
   }
-  
+
   public Knoten pop() {
     if (kopf.successor != ende) {
       Knoten poppedKnoten = kopf.successor;
@@ -17,7 +40,7 @@ public class Kette {
       kopf.successor = poppedKnoten.successor;
       kopf.successor.predecessor = kopf;
       
-      System.out.println("Popped knoten");
+      System.out.println("Popped knoten with value " + poppedKnoten.data);
       
       return poppedKnoten;
     } else {
@@ -43,5 +66,39 @@ public class Kette {
       knoten = knoten.successor;
     }
     System.out.println();
+  }
+  
+  void pushCLI(BufferedReader br, Kette kette) {
+    System.out.println("Enter the data of the element you want to push:");
+    String data = "";
+    boolean isInt = true;
+    try {
+      data = br.readLine();
+    } catch (IOException e) {
+      System.out.println("Invalid input");
+    }
+    int dataInt = 0;
+    try {
+      dataInt = Integer.parseInt(data);
+    } catch (NumberFormatException nfe) {
+      isInt = false;
+    }
+    if (isInt) {
+      kette.push(dataInt);
+    } else {
+      kette.push(data);  
+    }
+  }                                                  
+  
+  static Kette initialize() {
+    Kette kette = new Kette();
+    kette.kopf.successor = kette.ende;
+    return kette;
+  }
+  
+  static void printOptions() {
+    System.out.println("Press [1] to print current chain");
+    System.out.println("Press [2] to pop element");
+    System.out.println("Press [3] to push element"); 
   }
 }
