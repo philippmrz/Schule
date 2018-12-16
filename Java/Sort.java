@@ -1,7 +1,7 @@
 import java.util.Random;
 class Sort {
 
-  static int[] arr = new int[10];
+  static int[] arr = new int[3];
 
   public static void main(String [] args){
     fillArray();
@@ -84,26 +84,22 @@ class Sort {
 
   static int returnSortedPivot(int start, int end) {
     int left = start;
-    int right = end - 1;
+    int right = end;
 
     int pivot = arr[end];
-    System.out.println("Left: " + left + " Right: " + right + " Pivot: " + pivot);
 
     while (left < right) {
       // Find first item with item > pivot starting from the left
-      while (arr[left] < pivot && right >= left) {
+      while (arr[left] < pivot && right > left) {
         left++;
       }
 
-      while (arr[right] > pivot && right >= left) {
+      while (arr[right] >= pivot && right > left) {
         right--;
       }
-
-      System.out.println("larger than pivot: " + arr[left]);
-      System.out.println("smaller than pivot: " + arr[right]);
-      if (right < left) swap(left, end);
-      else swap(left, right);
+      swap(left, right);
     }
+    swap(left, end);
     return left;
   }
 }
