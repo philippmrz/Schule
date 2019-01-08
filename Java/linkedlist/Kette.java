@@ -13,7 +13,11 @@ public class Kette {
     kette.runCLI(kette);
   }
 
-  public Knoten pop() {
+  private void bubbleSort(Kette kette) {
+
+  }
+
+  private Knoten pop() {
     if (kopf.successor != ende) {
       Knoten poppedKnoten = kopf.successor;
 
@@ -29,7 +33,7 @@ public class Kette {
     }
   }
 
-  public void push(Object data) {
+  private void push(Object data) {
     Knoten knoten = new Knoten(kopf, kopf.successor, data);
     kopf.successor.predecessor = knoten;
     kopf.successor = knoten;
@@ -70,7 +74,7 @@ public class Kette {
     }
   }
 
-  public void print() {
+  private void print() {
     Knoten knoten = kopf;
     int index = 1;
     while (knoten != null) {
@@ -81,7 +85,7 @@ public class Kette {
     System.out.println();
   }
 
-  void pushCLI(BufferedReader br, Kette kette) {
+  private void pushCLI(BufferedReader br, Kette kette) {
     System.out.println("Enter the data of the element you want to push:");
     String data = "";
     boolean isInt = true;
@@ -103,13 +107,13 @@ public class Kette {
     }
   }
 
-  static Kette initialize() {
+  private static Kette initialize() {
     Kette kette = new Kette();
     kette.kopf.successor = kette.ende;
     return kette;
   }
 
-  static void printOptions() {
+  private static void printOptions() {
     System.out.println("Press [1] to print current chain");
     System.out.println("Press [2] to pop element");
     System.out.println("Press [3] to push element");
