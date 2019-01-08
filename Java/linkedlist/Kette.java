@@ -14,7 +14,21 @@ public class Kette {
   }
 
   private void bubbleSort(Kette kette) {
-
+    Knoten knoten;
+    boolean isSorted = false;
+    while (!isSorted) {
+      isSorted = true;
+      knoten = kopf.successor;
+      while (knoten.successor.data != "Ende") {
+        if ((int) knoten.data > (int) knoten.successor.data) {
+          swapData(kette, knoten);
+          isSorted = false;
+        }
+        knoten = knoten.successor;
+      }
+    }
+    System.out.println("Sorted:");
+    kette.print();
   }
 
   private Knoten pop() {
@@ -63,6 +77,9 @@ public class Kette {
         kette.pushCLI(br, kette);
         break;
       case "4":
+        kette.bubbleSort(kette);
+        break;
+      case "5":
         cont = false;
         break;
       case "":
@@ -74,11 +91,18 @@ public class Kette {
     }
   }
 
+  private void swapData(Kette kette, Knoten knoten) {
+    Object tmp = knoten.data;
+    knoten.data = knoten.successor.data;
+    knoten.successor.data = tmp;
+    System.out.println("Swapped " + knoten.data + " and " + knoten.successor.data);
+  }
+
   private void print() {
     Knoten knoten = kopf;
     int index = 1;
     while (knoten != null) {
-      System.out.print(index + ": " + knoten.data + " ");
+      System.out.println(index + ": " + knoten.data + " ");
       index++;
       knoten = knoten.successor;
     }
@@ -110,6 +134,12 @@ public class Kette {
   private static Kette initialize() {
     Kette kette = new Kette();
     kette.kopf.successor = kette.ende;
+    kette.push(34);
+    kette.push(43);
+    kette.push(3);
+    kette.push(-3);
+    kette.push(0);
+    kette.push(10120);
     return kette;
   }
 
@@ -117,6 +147,7 @@ public class Kette {
     System.out.println("Press [1] to print current chain");
     System.out.println("Press [2] to pop element");
     System.out.println("Press [3] to push element");
-    System.out.println("Press [4] to quit");
+    System.out.println("Press [4] to bubble sort");
+    System.out.println("Press [5] to quit");
   }
 }
