@@ -31,6 +31,13 @@ public class Kette {
     kette.print();
   }
 
+  private void swapData(Kette kette, Knoten knoten) {
+    Object tmp = knoten.data;
+    knoten.data = knoten.successor.data;
+    knoten.successor.data = tmp;
+    System.out.println("Swapped " + knoten.data + " and " + knoten.successor.data);
+  }
+
   private Knoten pop() {
     if (kopf.successor != ende) {
       Knoten poppedKnoten = kopf.successor;
@@ -89,13 +96,6 @@ public class Kette {
         System.out.println("Invalid input");
       }
     }
-  }
-
-  private void swapData(Kette kette, Knoten knoten) {
-    Object tmp = knoten.data;
-    knoten.data = knoten.successor.data;
-    knoten.successor.data = tmp;
-    System.out.println("Swapped " + knoten.data + " and " + knoten.successor.data);
   }
 
   private void print() {
