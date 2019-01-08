@@ -9,6 +9,35 @@ public class Kette {
 
   public static void main(String[] args) {
     Kette kette = initialize();
+
+    kette.runCLI(kette);
+  }
+
+  public Knoten pop() {
+    if (kopf.successor != ende) {
+      Knoten poppedKnoten = kopf.successor;
+
+      kopf.successor = poppedKnoten.successor;
+      kopf.successor.predecessor = kopf;
+
+      System.out.println("Popped knoten with value " + poppedKnoten.data);
+
+      return poppedKnoten;
+    } else {
+      System.out.println("Error: Cant pop ende Knoten");
+      return null;
+    }
+  }
+
+  public void push(Object data) {
+    Knoten knoten = new Knoten(kopf, kopf.successor, data);
+    kopf.successor.predecessor = knoten;
+    kopf.successor = knoten;
+
+    System.out.println("Pushed knoten with value " + knoten.data);
+  }
+
+  private void runCLI(Kette kette) {
     BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
     String option = "";
     boolean cont = true;
@@ -39,31 +68,6 @@ public class Kette {
         System.out.println("Invalid input");
       }
     }
-
-  }
-
-  public Knoten pop() {
-    if (kopf.successor != ende) {
-      Knoten poppedKnoten = kopf.successor;
-
-      kopf.successor = poppedKnoten.successor;
-      kopf.successor.predecessor = kopf;
-
-      System.out.println("Popped knoten with value " + poppedKnoten.data);
-
-      return poppedKnoten;
-    } else {
-      System.out.println("Error: Cant pop ende Knoten");
-      return null;
-    }
-  }
-
-  public void push(Object data) {
-    Knoten knoten = new Knoten(kopf, kopf.successor, data);
-    kopf.successor.predecessor = knoten;
-    kopf.successor = knoten;
-
-    System.out.println("Pushed knoten with value " + knoten.data);
   }
 
   public void print() {
