@@ -1,4 +1,4 @@
-
+package linkedlist;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
@@ -11,10 +11,6 @@ public class Kette {
     Kette kette = initialize();
 
     kette.runCLI(kette);
-  }
-  
-  private void insertionSort(Kette) {
-    
   }
 
   private void bubbleSort(Kette kette) {
