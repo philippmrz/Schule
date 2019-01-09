@@ -19,7 +19,7 @@ public class Kette {
     while (!isSorted) {
       isSorted = true;
       knoten = kopf.successor;
-      while (knoten.successor.data != "Ende") {
+      while (knoten.successor != null && knoten.successor.data != "Ende") {
         if ((int) knoten.data > (int) knoten.successor.data) {
           swapPointers(kette, knoten);
           isSorted = false;
