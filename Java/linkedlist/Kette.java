@@ -1,4 +1,3 @@
-package linkedlist;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
@@ -9,7 +8,6 @@ public class Kette {
 
   public static void main(String[] args) {
     Kette kette = initialize();
-
     kette.runCLI(kette);
   }
 
@@ -23,6 +21,7 @@ public class Kette {
         if ((int) knoten.data > (int) knoten.successor.data) {
           swapPointers(kette, knoten);
           isSorted = false;
+          kette.print();
         }
         knoten = knoten.successor;
       }
@@ -30,7 +29,19 @@ public class Kette {
     System.out.println("Sorted:");
     kette.print();
   }
-
+  
+  private void insertionSort(Kette kette) {
+    Knoten knoten = kopf.successor.successor;
+    while (knoten.successor != null && knoten.successor.data != "Ende") {
+      Knoten backwardsKnot = knoten.predecessor;
+      while (backwardsKnot != null && backwardsKnot.data != "Kopf" && (int) backwardsKnot.data > (int) knoten.data){ 
+        backwardsKnot = backwardsKnot.predecessor;
+      }
+      //swapPointers(kette, knoten, backwardsKnot);
+      knoten = knoten.successor;
+    }
+  }
+  //TODO: Swap two non-adjacent knots
   private void swapPointers(Kette kette, Knoten knoten) {
     Knoten tmpKnoten = knoten.successor.successor;
     knoten.predecessor.successor = knoten.successor;
@@ -137,12 +148,9 @@ public class Kette {
   private static Kette initialize() {
     Kette kette = new Kette();
     kette.kopf.successor = kette.ende;
-    kette.push(34);
-    kette.push(43);
     kette.push(3);
-    kette.push(-3);
-    kette.push(0);
-    kette.push(10120);
+    kette.push(2);
+    kette.push(1);
     return kette;
   }
 
