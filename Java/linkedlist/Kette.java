@@ -1,4 +1,4 @@
-package linkedlist;
+
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
@@ -12,6 +12,10 @@ public class Kette {
 
     kette.runCLI(kette);
   }
+  
+  private void insertionSort(Kette) {
+    
+  }
 
   private void bubbleSort(Kette kette) {
     Knoten knoten;
@@ -21,7 +25,7 @@ public class Kette {
       knoten = kopf.successor;
       while (knoten.successor.data != "Ende") {
         if ((int) knoten.data > (int) knoten.successor.data) {
-          swapData(kette, knoten);
+          swapPointers(kette, knoten);
           isSorted = false;
         }
         knoten = knoten.successor;
@@ -31,11 +35,14 @@ public class Kette {
     kette.print();
   }
 
-  private void swapData(Kette kette, Knoten knoten) {
-    Object tmp = knoten.data;
-    knoten.data = knoten.successor.data;
-    knoten.successor.data = tmp;
-    System.out.println("Swapped " + knoten.data + " and " + knoten.successor.data);
+  private void swapPointers(Kette kette, Knoten knoten) {
+    Knoten tmpKnoten = knoten.successor.successor;
+    knoten.predecessor.successor = knoten.successor;
+    knoten.successor.predecessor = knoten.predecessor;
+    knoten.successor.successor = knoten;
+    knoten.predecessor = knoten.successor;
+    knoten.successor = tmpKnoten;
+    tmpKnoten.predecessor = knoten;
   }
 
   private Knoten pop() {
