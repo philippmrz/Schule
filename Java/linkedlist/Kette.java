@@ -1,3 +1,5 @@
+package linkedlist;
+
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
@@ -8,6 +10,7 @@ public class Kette {
 
   public static void main(String[] args) {
     Kette kette = initialize();
+    kette.swapPointers(kette, kette.kopf.successor.successor, kette.ende.predecessor);
     kette.runCLI(kette);
   }
 
@@ -19,9 +22,8 @@ public class Kette {
       knoten = kopf.successor;
       while (knoten.successor != null && knoten.successor.data != "Ende") {
         if ((int) knoten.data > (int) knoten.successor.data) {
-          swapPointers(kette, knoten);
+          swapPointers(kette, knoten, null);
           isSorted = false;
-          kette.print();
         }
         knoten = knoten.successor;
       }
@@ -29,27 +31,46 @@ public class Kette {
     System.out.println("Sorted:");
     kette.print();
   }
-  
+
   private void insertionSort(Kette kette) {
     Knoten knoten = kopf.successor.successor;
     while (knoten.successor != null && knoten.successor.data != "Ende") {
       Knoten backwardsKnot = knoten.predecessor;
-      while (backwardsKnot != null && backwardsKnot.data != "Kopf" && (int) backwardsKnot.data > (int) knoten.data){ 
+      while (backwardsKnot != null && backwardsKnot.data != "Kopf" && (int) backwardsKnot.data > (int) knoten.data) {
         backwardsKnot = backwardsKnot.predecessor;
       }
-      //swapPointers(kette, knoten, backwardsKnot);
+      swapPointers(kette, knoten, backwardsKnot);
       knoten = knoten.successor;
     }
   }
-  //TODO: Swap two non-adjacent knots
-  private void swapPointers(Kette kette, Knoten knoten) {
-    Knoten tmpKnoten = knoten.successor.successor;
-    knoten.predecessor.successor = knoten.successor;
-    knoten.successor.predecessor = knoten.predecessor;
-    knoten.successor.successor = knoten;
-    knoten.predecessor = knoten.successor;
-    knoten.successor = tmpKnoten;
-    tmpKnoten.predecessor = knoten;
+
+  private void swapPointers(Kette kette, Knoten knoten1, Knoten knoten2) {
+    if (knoten2 == null) {
+      Knoten tmpKnoten = knoten1.successor.successor;
+      knoten1.predecessor.successor = knoten1.successor;
+      knoten1.successor.predecessor = knoten1.predecessor;
+      knoten1.successor.successor = knoten1;
+      knoten1.predecessor = knoten1.successor;
+      knoten1.successor = tmpKnoten;
+      tmpKnoten.predecessor = knoten1;
+    } else {
+      Knoten knoten1pre = knoten1.predecessor;
+      Knoten knoten1post = knoten1.successor;
+
+      knoten1.predecessor.successor = knoten2;
+      knoten1.predecessor = knoten2.predecessor;
+      knoten1.successor.predecessor = knoten2;
+      knoten1.successor = knoten2.successor;
+      System.out.println("Knoten 1: " + knoten1.data);
+      System.out.println("Knoten 2: " + knoten2.data);
+      System.out.println("Knoten 2 predecessor: " + knoten2.predecessor.data);
+      System.out.println("Knoten 2 predecessor successor: " + knoten2.predecessor.successor.data);
+      knoten2.predecessor.successor = knoten1;
+      knoten2.predecessor = knoten1pre;
+      knoten2.successor.predecessor = knoten1;
+      knoten2.successor = knoten1post;
+    }
+    System.out.println("Swapped");
   }
 
   private Knoten pop() {
@@ -101,6 +122,9 @@ public class Kette {
         kette.bubbleSort(kette);
         break;
       case "5":
+        kette.insertionSort(kette);
+        break;
+      case "6":
         cont = false;
         break;
       case "":
@@ -148,9 +172,12 @@ public class Kette {
   private static Kette initialize() {
     Kette kette = new Kette();
     kette.kopf.successor = kette.ende;
+    kette.push(4);
     kette.push(3);
     kette.push(2);
     kette.push(1);
+    System.out.println("Filled list: ");
+    kette.print();
     return kette;
   }
 
@@ -159,6 +186,7 @@ public class Kette {
     System.out.println("Press [2] to pop element");
     System.out.println("Press [3] to push element");
     System.out.println("Press [4] to bubble sort");
-    System.out.println("Press [5] to quit");
+    System.out.println("Press [5] to insertion sort");
+    System.out.println("Press [6] to quit");
   }
 }

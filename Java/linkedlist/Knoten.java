@@ -1,4 +1,5 @@
 package linkedlist;
+
 public class Knoten {
   Knoten predecessor;
   Knoten successor;
