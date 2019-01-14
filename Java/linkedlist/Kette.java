@@ -34,12 +34,15 @@ public class Kette {
 
   private void insertionSort(Kette kette) {
     Knoten knoten = kopf.successor.successor;
+    Object numToInsert;                                       
     while (knoten.successor != null && knoten.successor.data != "Ende") {
+      numToInsert = knoten.data;
       Knoten backwardsKnot = knoten.predecessor;
-      while (backwardsKnot != null && backwardsKnot.data != "Kopf" && (int) backwardsKnot.data > (int) knoten.data) {
+      while (backwardsKnot != null && backwardsKnot.data != "Kopf" && (int) backwardsKnot.data > (int) numToInsert) {
+        backwardsKnot.successor.data = backwardsKnot.data;
         backwardsKnot = backwardsKnot.predecessor;
       }
-      swapPointers(kette, knoten, backwardsKnot);
+      backwardsKnot.successor.data = numToInsert;
       knoten = knoten.successor;
     }
   }
