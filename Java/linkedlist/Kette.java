@@ -1,5 +1,3 @@
-package linkedlist;
-
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
@@ -10,7 +8,7 @@ public class Kette {
 
   public static void main(String[] args) {
     Kette kette = initialize();
-    kette.swapPointers(kette, kette.kopf.successor.successor, kette.ende.predecessor);
+    kette.print();
     kette.runCLI(kette);
   }
 
@@ -35,12 +33,13 @@ public class Kette {
   private void insertionSort(Kette kette) {
     Knoten knoten = kopf.successor.successor;
     Object numToInsert;                                       
-    while (knoten.successor != null && knoten.successor.data != "Ende") {
+    while (knoten.successor != null && knoten.data != "Ende") {
       numToInsert = knoten.data;
       Knoten backwardsKnot = knoten.predecessor;
       while (backwardsKnot != null && backwardsKnot.data != "Kopf" && (int) backwardsKnot.data > (int) numToInsert) {
         backwardsKnot.successor.data = backwardsKnot.data;
         backwardsKnot = backwardsKnot.predecessor;
+        kette.print();
       }
       backwardsKnot.successor.data = numToInsert;
       knoten = knoten.successor;
@@ -175,10 +174,12 @@ public class Kette {
   private static Kette initialize() {
     Kette kette = new Kette();
     kette.kopf.successor = kette.ende;
-    kette.push(4);
-    kette.push(3);
-    kette.push(2);
+    
     kette.push(1);
+    kette.push(2);
+    kette.push(3);
+    kette.push(4);
+    
     System.out.println("Filled list: ");
     kette.print();
     return kette;
