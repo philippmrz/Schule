@@ -1,3 +1,5 @@
+package linkedlist;
+
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
@@ -36,12 +38,19 @@ public class Kette {
     while (knoten.successor != null && knoten.data != "Ende") {
       numToInsert = knoten.data;
       Knoten backwardsKnot = knoten.predecessor;
-      while (backwardsKnot != null && backwardsKnot.data != "Kopf" && (int) backwardsKnot.data > (int) numToInsert) {
-        backwardsKnot.successor.data = backwardsKnot.data;
+      while (backwardsKnot != null && backwardsKnot.data != "Kopf" && (int) backwardsKnot.data > (int) numToInsert) {;
+        //backwardsKnot.successor.data = backwardsKnot.data;
         backwardsKnot = backwardsKnot.predecessor;
         kette.print();
       }
-      backwardsKnot.successor.data = numToInsert;
+      knoten.predecessor.successor = knoten.successor;
+      knoten.successor.predecessor = knoten.predecessor;
+      
+      knoten.predecessor = backwardsKnot;
+      knoten.successor = backwardsKnot.successor;
+      backwardsKnot.successor.predecessor = knoten;
+      backwardsKnot.successor = knoten;
+      
       knoten = knoten.successor;
     }
   }
