@@ -1,5 +1,3 @@
-package linkedlist;
-
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
@@ -54,6 +52,18 @@ public class Kette {
       knoten = knoten.successor;
     }
   }
+  
+  private void selectionSort(Kette kette) {
+    Knoten knoten = kopf.successor;
+    Knoten findMin;
+    Object currentLowest = kopf.successor.data;
+    while (knoten != ende) {
+      findMin = knoten;    
+      while (findMin != ende) if (findMin.data < currentLowest) currentLowest = findMin.data;
+      //kette.swapPointers()
+      knoten = knoten.successor;
+    }
+  }
 
   private void swapPointers(Kette kette, Knoten knoten1, Knoten knoten2) {
     if (knoten2 == null) {
@@ -67,7 +77,7 @@ public class Kette {
     } else {
       Knoten knoten1pre = knoten1.predecessor;
       Knoten knoten1post = knoten1.successor;
-
+      
       knoten1.predecessor.successor = knoten2;
       knoten1.predecessor = knoten2.predecessor;
       knoten1.successor.predecessor = knoten2;
@@ -87,12 +97,12 @@ public class Kette {
   private Knoten pop() {
     if (kopf.successor != ende) {
       Knoten poppedKnoten = kopf.successor;
-
+      
       kopf.successor = poppedKnoten.successor;
       kopf.successor.predecessor = kopf;
-
+      
       System.out.println("Popped knoten with value " + poppedKnoten.data);
-
+      
       return poppedKnoten;
     } else {
       System.out.println("Error: Cant pop ende Knoten");
@@ -104,7 +114,7 @@ public class Kette {
     Knoten knoten = new Knoten(kopf, kopf.successor, data);
     kopf.successor.predecessor = knoten;
     kopf.successor = knoten;
-
+    
     System.out.println("Pushed knoten with value " + knoten.data);
   }
 
@@ -120,29 +130,32 @@ public class Kette {
         System.err.println("Invalid Format!");
       }
       switch (option) {
-      case  "1":
-        kette.print();
-        break;
-      case  "2":
-        kette.pop();
-        break;
-      case "3":
-        kette.pushCLI(br, kette);
-        break;
-      case "4":
-        kette.bubbleSort(kette);
-        break;
-      case "5":
-        kette.insertionSort(kette);
-        break;
-      case "6":
-        cont = false;
-        break;
-      case "":
-        System.out.println("Enter something");
-        break;
-      default:
-        System.out.println("Invalid input");
+        case  "1":
+          kette.print();
+          break;
+        case  "2":
+          kette.pop();
+          break;
+        case "3":
+          kette.pushCLI(br, kette);
+          break;
+        case "4":
+          kette.bubbleSort(kette);
+          break;
+        case "5":
+          kette.insertionSort(kette);
+          break;
+        case "6":
+          kette.selectionSort(kette);
+          break;
+        case "7":
+          cont = false;
+          break;
+        case "":
+          System.out.println("Enter something");
+          break;
+        default:
+          System.out.println("Invalid input");
       }
     }
   }
@@ -190,7 +203,6 @@ public class Kette {
     kette.push(4);
     
     System.out.println("Filled list: ");
-    kette.print();
     return kette;
   }
 
@@ -200,6 +212,7 @@ public class Kette {
     System.out.println("Press [3] to push element");
     System.out.println("Press [4] to bubble sort");
     System.out.println("Press [5] to insertion sort");
-    System.out.println("Press [6] to quit");
+    System.out.println("Press [6] to selection sort");
+    System.out.println("Press [7] to quit");
   }
 }
