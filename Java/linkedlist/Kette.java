@@ -20,7 +20,7 @@ public class Kette {
       knoten = kopf.successor;
       while (knoten.successor != null && knoten.successor.data != "Ende") {
         if ((int) knoten.data > (int) knoten.successor.data) {
-          swapPointers(kette, knoten, null);
+          swapPointers(knoten, null);
           isSorted = false;
         }
         knoten = knoten.successor;
@@ -59,14 +59,17 @@ public class Kette {
     Object currentLowest = kopf.successor.data;
     while (knoten != ende) {
       findMin = knoten;    
-      while (findMin != ende) if (findMin.data < currentLowest) currentLowest = findMin.data;
-      //kette.swapPointers()
+      while (findMin != ende) {
+        if ( (int) findMin.data < (int) currentLowest) currentLowest = findMin.data;
+        findMin = findMin.successor;
+      }
+      kette.swapPointers(findMin.predecessor, knoten);
       knoten = knoten.successor;
     }
   }
 
-  private void swapPointers(Kette kette, Knoten knoten1, Knoten knoten2) {
-    if (knoten2 == null) {
+  private void swapPointers(Knoten knoten1, Knoten knoten2) {
+    if (knoten1.successor == knoten2) {
       Knoten tmpKnoten = knoten1.successor.successor;
       knoten1.predecessor.successor = knoten1.successor;
       knoten1.successor.predecessor = knoten1.predecessor;
@@ -80,6 +83,7 @@ public class Kette {
       
       knoten1.predecessor.successor = knoten2;
       knoten1.predecessor = knoten2.predecessor;
+      System.out.println("Knoten1.successor: " + knoten1.successor);
       knoten1.successor.predecessor = knoten2;
       knoten1.successor = knoten2.successor;
       System.out.println("Knoten 1: " + knoten1.data);
@@ -199,7 +203,7 @@ public class Kette {
     
     kette.push(1);
     kette.push(2);
-    kette.push(3);
+    kette.push(3);   
     kette.push(4);
     
     System.out.println("Filled list: ");
