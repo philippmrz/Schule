@@ -4,13 +4,51 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 
 public class Kette {
-  Knoten kopf = new Knoten(null, null, "Kopf");
-  Knoten ende = new Knoten(kopf, null, "Ende");
+  Knoten kopf;
+  Knoten ende;
+  private int length;
+  public Kette() {
+    this.kopf = new Knoten(null, null, "Kopf");
+    this.ende = new Knoten(kopf, null, "Ende");
+    this.kopf.successor = this.ende;
+    this.length = 0;
+  }
 
   public static void main(String[] args) {
     Kette kette = initialize();
     kette.print();
     kette.runCLI(kette);
+    kette = mergeSort(kette);
+    kette.print();
+  }
+
+  private static Kette merge(Kette links, Kette rechts) {
+    links.print();
+    rechts.print();
+    Kette output = new Kette();
+    while (links.kopf.successor != links.ende && rechts.kopf.successor != rechts.ende) {
+      if ((int) links.kopf.successor.data > (int) rechts.kopf.successor.data) output.push(rechts.pop().data);
+      else output.push(links.pop().data);
+    }
+    while (rechts.kopf.successor != rechts.ende) output.push(rechts.pop().data);
+    while (links.kopf.successor != links.ende) output.push(links.pop().data);
+    return output;
+  }
+
+  private static Kette divide(Kette kette) {
+    if (kette.length < 2) return kette;
+    Kette links = new Kette();
+    for (int i = 0; i < kette.length / 2; i++) links.push(kette.pop().data);
+    Kette rechts = kette;
+    links = divide(links);
+    rechts = divide(rechts);
+    Kette lb = merge(links, rechts);
+    lb.print();
+    return lb;
+  }
+
+  private static Kette mergeSort(Kette kette) {
+    return divide(kette);
   }
 
   private void bubbleSort(Kette kette) {
@@ -101,6 +139,7 @@ public class Kette {
 
   private Knoten pop() {
     if (kopf.successor != ende) {
+      this.length--;
       Knoten poppedKnoten = kopf.successor;
 
       kopf.successor = poppedKnoten.successor;
@@ -116,9 +155,10 @@ public class Kette {
   }
 
   private void push(Object data) {
-    Knoten knoten = new Knoten(kopf, kopf.successor, data);
-    kopf.successor.predecessor = knoten;
-    kopf.successor = knoten;
+    this.length++;
+    Knoten knoten = new Knoten(this.ende.predecessor, this.ende, data);
+    this.ende.predecessor.successor = knoten;
+    ende.predecessor = knoten;
 
     System.out.println("Pushed knoten with value " + knoten.data);
   }
